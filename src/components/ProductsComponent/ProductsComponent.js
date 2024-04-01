@@ -6,9 +6,19 @@ import { useEffect } from 'react';
 import { getProducts } from '../../Redux/Product/actions';
 import { addCartItem } from '../../Redux/Cart/cartSlice';
 import { Link } from 'react-router-dom';
-const Products=()=>{
+const Products=(props)=>{
 
     let productData= useSelector(state=>state.productReducer.products);
+    let cop =[...productData]
+    let soNada
+    if(props.productOrder =='' || props.productOrder =='name' ){
+       soNada = cop.sort((a, b) => a?.product_name.toLowerCase() > b?.product_name.toLowerCase() ? 1 : -1);
+    }else{
+       soNada = cop.sort((a, b) => a?.price > b?.price ? 1 : -1);
+    }
+     
+    
+    console.log('productData===',soNada)
     
     let cartData=useSelector(state=>state.cartReducer)
     console.log(cartData);
@@ -29,9 +39,11 @@ const Products=()=>{
 
     
     return(
- 
+     
         <div className='product-container'>
-    {productData.map((eachProduct,index)=>{
+    {
+      
+      soNada.map((eachProduct,index)=>{
 
             
 return(

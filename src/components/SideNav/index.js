@@ -4,13 +4,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import accordionSlice from '../../Redux/Accordion/accordionSlice'
 import { getCategories } from '../../Redux/Category/actions'
 import { filterByPrice, filterProducts } from '../../Redux/Product/productSlice'
-const SideNav = () => {
+const SideNav = (props) => {
 
     let accordionData= useSelector(state=>state.categoryReducer.categories);
     let  fetchedProductData= useSelector(state=>state.productReducer)
     let [products,setProducts] = useState();
     let [minPriceLimit,setMinPriceLimit]= useState(10);
     let [maxPriceLimit,setMaxPriceLimit]= useState(130);
+    let [sortingOrder, setSortingOrder] = useState('name')
+    
     
     const dispatch= useDispatch();
 
@@ -106,6 +108,25 @@ if(eachData.parent_category_id==null)
 
 
         </div>
+        <div className="container">
+  <div className="row">
+    <div className="col-sm-12">
+        <div className="radio">
+          <label>
+            <input type="radio" value="name"  onClick={() =>{setSortingOrder('name');props.getDataFromChild(sortingOrder)}}  checked={sortingOrder == 'name'} />
+           Sort by Name
+          </label>
+        </div>
+        <div className="radio">
+          <label>
+            <input type="radio" value="price"  onClick={() =>{setSortingOrder('price');props.getDataFromChild(sortingOrder)}}  checked={sortingOrder == 'price'} />
+            Sort by Price
+          </label>
+        </div>
+
+    </div>
+  </div>
+</div>
         <div className="price-filter-container">
          <div className='section-title '>
 
